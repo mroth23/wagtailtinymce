@@ -60,6 +60,6 @@ function makeTinyMCEEditable(id, kwargs) {
             });
         }
     });
-
+    tinymce.suffix = '.min'
     tinymce.init(kwargs);
 }
