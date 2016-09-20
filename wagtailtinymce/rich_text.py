@@ -126,7 +126,6 @@ class DbTinymceWhitelister(DbWhitelister):
 
 
 class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
-
     @classmethod
     def getDefaultArgs(cls):
         return {
@@ -168,24 +167,32 @@ class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
         return super(TinyMCERichTextArea, self).render(name, translated_value, attrs)
 
     def render_js_init(self, id_, name, value):
-        kwargs = {
-            'options': self.kwargs.get('options', {}),
-        }
+        options = self.kwargs.get('options')
+        if options:
+            kwargs = options.copy()
+        else:
+            kwargs = {}
 
-        if 'buttons' in self.kwargs:
-            if self.kwargs['buttons'] is False:
-                kwargs['toolbar'] = False
-            else:
-                kwargs['toolbar'] = [
-                    ' | '.join([' '.join(groups) for groups in rows])
-                    for rows in self.kwargs['buttons']
-                ]
+        buttons = self.kwargs.get('buttons')
+        if buttons:
+            kwargs['toolbar'] = [
+                ' | '.join([' '.join(groups) for groups in rows])
+                for rows in self.kwargs['buttons']
+            ]
+        else:
+            kwargs['toolbar'] = False
 
-        if 'menus' in self.kwargs:
-            if self.kwargs['menus'] is False:
-                kwargs['menubar'] = False
-            else:
-                kwargs['menubar'] = ' '.join(self.kwargs['menus'])
+        menus = self.kwargs.get('menus')
+        if menus:
+            kwargs['menubar'] = ' '.join(self.kwargs['menus'])
+        else:
+            kwargs['menubar'] = False
+
+        language = self.kwargs.get('language')
+        if not language or language == 'en_US':
+            kwargs['language'] = 'en'
+        else:
+            kwargs['language'] = language
 
         return "makeTinyMCEEditable({0}, {1});".format(json.dumps(id_), json.dumps(kwargs))
 
