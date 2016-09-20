@@ -36,6 +36,15 @@ from wagtail.wagtailcore.rich_text import expand_db_html, get_link_handler, get_
 from wagtail.wagtailcore.whitelist import allow_without_attributes, attribute_rule, check_url
 
 
+ALLOWED_ATTR = dict.fromkeys(
+    ['border', 'cellpadding', 'cellspacing', 'style', 'width', 'colspan', 'margin-left',  'margin-right', 'height',
+     'border-color', 'text-align', 'background-color', 'vertical-align', 'scope', 'font-family', 'rowspan', 'valign'],
+    True)
+
+
+default_attribute_rule = attribute_rule(ALLOWED_ATTR)
+
+
 class DbTinymceWhitelister(DbWhitelister):
     """
     A custom whitelisting engine to convert the HTML as returned by the rich text editor
@@ -51,46 +60,42 @@ class DbTinymceWhitelister(DbWhitelister):
       determined by the handler for that type defined in LINK_HANDLERS, while keeping the
       element content intact.
     """
-    allow_attr = {'border': True, 'cellpadding': True, 'cellspacing': True, 'style': True, 'width': True, 'border': True,
-                  'colspan': True, 'margin-left': True, 'margin-right': True, 'height': True, 'border-color': True,
-                  'text-align': True, 'background-color': True, 'vertical-align': True, 'scope': True, 'font-family': True,
-                  'rowspan': True, 'valign': True}
     element_rules = {
         '[document]': allow_without_attributes,
         'a': attribute_rule({'href': check_url}),
         'b': allow_without_attributes,
         'br': allow_without_attributes,
-        'div': attribute_rule(allow_attr),
-        'em': attribute_rule(allow_attr),
-        'h1': attribute_rule(allow_attr),
-        'h2': attribute_rule(allow_attr),
-        'h3': attribute_rule(allow_attr),
-        'h4': attribute_rule(allow_attr),
-        'h5': attribute_rule(allow_attr),
-        'h6': attribute_rule(allow_attr),
+        'div': default_attribute_rule,
+        'em': default_attribute_rule,
+        'h1': default_attribute_rule,
+        'h2': default_attribute_rule,
+        'h3': default_attribute_rule,
+        'h4': default_attribute_rule,
+        'h5': default_attribute_rule,
+        'h6': default_attribute_rule,
         'hr': allow_without_attributes,
         'i': allow_without_attributes,
         'img': attribute_rule({'src': check_url, 'width': True, 'height': True,
                                'alt': True}),
-        'li': attribute_rule(allow_attr),
-        'ol': attribute_rule(allow_attr),
-        'p': attribute_rule(allow_attr),
-        'strong': attribute_rule(allow_attr),
-        'sub': attribute_rule(allow_attr),
-        'sup': attribute_rule(allow_attr),
-        'ul': attribute_rule(allow_attr),
+        'li': default_attribute_rule,
+        'ol': default_attribute_rule,
+        'p': default_attribute_rule,
+        'strong': default_attribute_rule,
+        'sub': default_attribute_rule,
+        'sup': default_attribute_rule,
+        'ul': default_attribute_rule,
 
-        'blockquote': attribute_rule(allow_attr),
-        'pre': attribute_rule(allow_attr),
-        'span': attribute_rule(allow_attr),
-        'code': attribute_rule(allow_attr),
+        'blockquote': default_attribute_rule,
+        'pre': default_attribute_rule,
+        'span': default_attribute_rule,
+        'code': default_attribute_rule,
 
-        'table': attribute_rule(allow_attr),
-        'caption': attribute_rule(allow_attr),
-        'tbody': attribute_rule(allow_attr),
-        'th': attribute_rule(allow_attr),
-        'tr': attribute_rule(allow_attr),
-        'td': attribute_rule(allow_attr),
+        'table': default_attribute_rule,
+        'caption': default_attribute_rule,
+        'tbody': default_attribute_rule,
+        'th': default_attribute_rule,
+        'tr': default_attribute_rule,
+        'td': default_attribute_rule,
     }
 
     @classmethod
