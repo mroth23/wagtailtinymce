@@ -46,7 +46,7 @@ install_requires = [
 
 setup(
     name='wagtailtinymce',
-    version='4.6.0.0.lepko1',
+    version='4.6.0.0.lepko2',
     description='A TinyMCE editor integration for Wagtail',
     author='Richard Mitchell',
     author_email='richard.mitchell@isotoma.com',
