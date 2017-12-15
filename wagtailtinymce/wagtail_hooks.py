@@ -86,7 +86,7 @@ def images_richtexteditor_js():
     return format_html(
         """
         <script>
-            registerMCEPlugin("wagtailimage", {}, {});
+            //registerMCEPlugin("wagtailimage", {}, {});
             window.chooserUrls.imageChooserSelectFormat = {};
         </script>
         """,
@@ -127,7 +127,7 @@ def docs_richtexteditor_js():
     return format_html(
         """
         <script>
-            registerMCEPlugin("wagtaildoclink", {}, {});
+            //registerMCEPlugin("wagtaildoclink", {}, {});
         </script>
         """,
         to_js_primitive(static('wagtailtinymce/js/tinymce-plugins/wagtaildoclink.js')),
