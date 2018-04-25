@@ -26,7 +26,7 @@
 
 import json
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.templatetags.static import static
 from django.utils import translation
 from django.utils.html import escape
@@ -34,8 +34,8 @@ from django.utils.html import format_html
 from django.utils.html import format_html_join
 from django.utils.safestring import mark_safe
 
-from wagtail.wagtailadmin.templatetags.wagtailadmin_tags import hook_output
-from wagtail.wagtailcore import hooks
+from wagtail.admin.templatetags.wagtailadmin_tags import hook_output
+from wagtail.core import hooks
 
 
 def to_js_primitive(string):
